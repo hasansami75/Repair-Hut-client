@@ -1,33 +1,31 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../../App';
 
 const Header = () => {
+    
     return (
         <>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="#">Mobile Repair</a>
+                    <a class="navbar-brand" href="#">Repair HUT</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <Link to="/home" class="nav-link active" aria-current="page">Home</Link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About Us</a>
+                            <Link to="/home" class="nav-link active" aria-current="page">About Us</Link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Services</a>
+                            <Link to="/user" class="nav-link active" aria-current="page">Dashboard</Link>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Blog</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <button class="btn btn-outline-success" type="submit">Login</button>
+                                <Link to="/login"><button class="btn btn-outline-success" type="submit">Login</button></Link>
                             </li>
                         </ul>
                     </div>

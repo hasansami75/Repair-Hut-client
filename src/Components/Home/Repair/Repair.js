@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobileAlt, faCamera , faLaptop , faTabletAlt , faVideo , faGamepad} from '@fortawesome/free-solid-svg-icons';
 
 
@@ -9,7 +9,7 @@ const Repair = () => {
             <div className="container">
                 <h1 class="text-center my-5">WE REPAIR</h1>
                 <div className="row my-5">
-                    <div className="col-md-4 d-flex justify-content-center">
+                    <div className="col-md-4 col-sm-12 m-sm-auto d-flex justify-content-center">
                         <div className="col-md-2 fs-2">
                         <FontAwesomeIcon icon={faMobileAlt} />
                         </div>
