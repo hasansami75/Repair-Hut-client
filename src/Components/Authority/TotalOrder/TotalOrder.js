@@ -241,7 +241,7 @@ const TotalOrder = () => {
                             <div className="col-md-12">
                                 <table class="table">
                                     <thead>
-                                        <tr class="bg-info rounded">
+                                        <tr class="bg-secondary text-white rounded">
                                             <th scope="col"> Name</th>
                                             <th scope="col">Email ID</th>
                                             <th scope="col">Service</th>
@@ -249,7 +249,7 @@ const TotalOrder = () => {
                                             <th scope="col">Order Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-warning">
+                                    <tbody class="table-info">
                                         {manageServices.map(service => (<tr>
                                             <th scope="row">{service.userName}</th>
                                             <td>{service.email}</td>

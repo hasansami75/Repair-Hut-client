@@ -101,7 +101,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ManageData = () => {
-    // const [services, setServices] = useState([]);
     const [manageServices, setManageServices] = useState([]);
     const [deleteService, setDeleteService] = useState([]);
 
