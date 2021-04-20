@@ -17,6 +17,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Link } from 'react-router-dom';
 import BookingDataDetails from '../BookingDataDetails/BookingDataDetails';
+import loader from '../../../loader.gif';
 
 
 const drawerWidth = 240;
@@ -154,28 +155,28 @@ const BookingData = () => {
                             <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
                         </ListItem>
                         {
-                        user.admin == false &&
-                        <div>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <DashboardIcon />
-                                </ListItemIcon>
-                                <Link to="/user"><ListItemText primary="Book" /></Link>
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <AddCircleIcon />
-                                </ListItemIcon>
-                                <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <EditIcon />
-                                </ListItemIcon>
-                                <Link to="/review"><ListItemText primary="Review" /></Link>
-                            </ListItem>
-                        </div>
-                    }
+                            user.admin == false &&
+                            <div>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <Link to="/user"><ListItemText primary="Book" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <AddCircleIcon />
+                                    </ListItemIcon>
+                                    <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <EditIcon />
+                                    </ListItemIcon>
+                                    <Link to="/review"><ListItemText primary="Review" /></Link>
+                                </ListItem>
+                            </div>
+                        }
                         {
                             user.admin == true &&
                             <div>
@@ -229,6 +230,9 @@ const BookingData = () => {
                                                 <img src="" alt="" />
 
                                             </thead>
+                                            {
+                                                list.length === 0 && <img className="loader-resize" src={loader}></img>
+                                            }
                                             {
                                                 list.map(listDetails => <BookingDataDetails listDetails={listDetails}></BookingDataDetails>)
                                             }

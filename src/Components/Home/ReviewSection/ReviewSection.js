@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Review from '../Review/Review';
+import loader from '../../../loader.gif';
 
 const ReviewSection = () => {
     const [reviews, setReviews] = useState([]);
@@ -17,6 +18,9 @@ const ReviewSection = () => {
                     <h1 class="text-center text-primary">Customer Reviews</h1>
                 </div>
                 <div className="row">
+                    {
+                        reviews.length === 0 && <img className="loader-resize" src={loader}></img>
+                    }
                     {
                         reviews.map(review => <Review review={review}></Review>)
                     }

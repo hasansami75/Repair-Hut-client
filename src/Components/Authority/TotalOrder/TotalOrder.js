@@ -16,6 +16,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../App';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import loader from '../../../loader.gif';
 
 const drawerWidth = 240;
 
@@ -249,7 +250,13 @@ const TotalOrder = () => {
                                             <th scope="col">Order Status</th>
                                         </tr>
                                     </thead>
+                                    {
+
+                                    }
                                     <tbody class="table-info">
+                                        {
+                                            manageServices.length === 0 && <img className="loader-resize" src={loader}></img>
+                                        }
                                         {manageServices.map(service => (<tr>
                                             <th scope="row">{service.userName}</th>
                                             <td>{service.email}</td>

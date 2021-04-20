@@ -17,6 +17,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { UserContext } from '../../../App';
+import loader from '../../../loader.gif';
 
 
 const drawerWidth = 240;
@@ -230,6 +231,9 @@ const ManageData = () => {
 
                                 </thead>
                                 <tbody class="table-warning">
+                                    {
+                                        manageServices.length === 0 && <img className="loader-resize" src={loader}></img>
+                                    }
                                     {manageServices.map(service => (<tr>
                                         <th scope="row">{service.name}</th>
                                         <td>{service.price}</td>

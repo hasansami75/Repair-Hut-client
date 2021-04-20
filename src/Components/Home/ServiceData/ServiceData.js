@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Service from '../Service/Service';
 import './ServiceData.css';
+import loader from '../../../loader.gif';
 
 const ServiceData = () => {
 
     const [services, setServices] = useState([]);
-   
+
     useEffect(() => {
         fetch('https://young-wave-18523.herokuapp.com/services')
             .then(res => res.json())
@@ -18,9 +19,12 @@ const ServiceData = () => {
                     <h1 class="text-center text-primary">OUR SERVICES</h1>
                 </div>
                 <div className="card-deck row">
-                   {
-                       services.map(service=> <Service service={service}></Service>)
-                   }
+                    {
+                        services.length === 0 && <img className="loader-resize" src={loader}></img>
+                    }
+                    {
+                        services.map(service => <Service service={service}></Service>)
+                    }
                 </div>
             </div>
         </section>
