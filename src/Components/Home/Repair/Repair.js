@@ -7,8 +7,8 @@ const Repair = () => {
     return (
         <>
             <div className="container">
-                <h1 class="text-center text-primary my-5">WE REPAIR</h1>
-                <div className="row my-5">
+                <h1 class="text-center text-primary my-3">WE REPAIR</h1>
+                <div className="row my-3">
                     <div className="col-md-4 col-sm-12 m-sm-auto d-flex justify-content-center">
                         <div className="col-md-2 fs-2">
                         <FontAwesomeIcon icon={faMobileAlt} />

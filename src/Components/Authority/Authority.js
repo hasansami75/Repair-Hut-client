@@ -113,7 +113,7 @@ const Authority = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/adminEmail')
+        fetch('https://young-wave-18523.herokuapp.com/adminEmail')
             .then(res => res.json())
             .then(data => setIsAdmin(data))
     }, [])
@@ -134,7 +134,7 @@ const Authority = () => {
             price: data.price,
         };
         console.log(serviceData);
-        const url = `http://localhost:5000/addService`;
+        const url = `https://young-wave-18523.herokuapp.com/addService`;
         fetch(url, {
             method: 'POST',
             headers: {

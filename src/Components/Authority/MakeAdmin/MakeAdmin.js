@@ -111,7 +111,7 @@ const MakeAdmin = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/adminEmail')
+        fetch('https://young-wave-18523.herokuapp.com/adminEmail')
             .then(res => res.json())
             .then(data => setIsAdmin(data))
     }, [])
@@ -127,7 +127,7 @@ const MakeAdmin = () => {
         const adminEmails = {
             adminEmail: data.adminEmail,
         };
-        const url = `http://localhost:5000/addAdminEmail`;
+        const url = `https://young-wave-18523.herokuapp.com/addAdminEmail`;
         fetch(url, {
             method: 'POST',
             headers: {

@@ -114,7 +114,7 @@ const BookingData = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:5000/adminEmail')
+        fetch('https://young-wave-18523.herokuapp.com/adminEmail')
             .then(res => res.json())
             .then(data => setIsAdmin(data))
     }, [])
@@ -126,7 +126,7 @@ const BookingData = () => {
     })
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders?email=' + loggedInUser.email)
+        fetch('https://young-wave-18523.herokuapp.com/orders?email=' + loggedInUser.email)
             .then(res => res.json())
             .then(data => setList(data))
     }, [])

@@ -114,7 +114,7 @@ const TotalOrder = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:5000/adminEmail')
+        fetch('https://young-wave-18523.herokuapp.com/adminEmail')
             .then(res => res.json())
             .then(data => setIsAdmin(data))
     }, [])
@@ -128,7 +128,7 @@ const TotalOrder = () => {
     const [status, setStatus] = useState([]);
 
     const updateData = (id) => {
-        const url = `http://localhost:5000/update/${id}`
+        const url = `https://young-wave-18523.herokuapp.com/update/${id}`
         fetch(url, {
             method: 'POST',
             headers: {
@@ -152,7 +152,7 @@ const TotalOrder = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/order')
+        fetch('https://young-wave-18523.herokuapp.com/order')
             .then(res => res.json())
             .then(data => setManageServices(data))
     }, [manageServices])

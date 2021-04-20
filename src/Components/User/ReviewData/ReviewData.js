@@ -114,7 +114,7 @@ const ReviewData = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/adminEmail')
+        fetch('https://young-wave-18523.herokuapp.com/adminEmail')
             .then(res => res.json())
             .then(data => setIsAdmin(data))
     }, [])
@@ -135,7 +135,7 @@ const ReviewData = () => {
             imageURL: imageURL
         };
         console.log(reviewData);
-        const url = `http://localhost:5000/addReview`;
+        const url = `https://young-wave-18523.herokuapp.com/addReview`;
         fetch(url, {
             method: 'POST',
             headers: {
