@@ -8,7 +8,7 @@ const Choose = () => {
         <>
             <div className="container-fluid bg-light mt-5">
             <div className="container">
-                <h1 class="text-center my-5">WHY CHOOSE US</h1>
+                <h1 class="text-center text-primary my-5">WHY CHOOSE US</h1>
                 <div className="row">
                     <div className="col-md-6">
                         <img className="img-fluid" src={c3} alt=""/>

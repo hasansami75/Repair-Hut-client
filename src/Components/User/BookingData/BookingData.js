@@ -108,25 +108,25 @@ const BookingData = () => {
     console.log(list);
     console.log(loggedInUser);
 
-    const [isAdmin,setIsAdmin] = useState([]);
-    const [user , setUser] = useState({
-        admin : false,
+    const [isAdmin, setIsAdmin] = useState([]);
+    const [user, setUser] = useState({
+        admin: false,
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:5000/adminEmail')
-        .then(res => res.json())
-        .then(data => setIsAdmin(data))
-    },[])
-    
-    const adminMap = isAdmin.map(admin=>{
-        if(admin.adminEmail === loggedInUser.email){
+            .then(res => res.json())
+            .then(data => setIsAdmin(data))
+    }, [])
+
+    const adminMap = isAdmin.map(admin => {
+        if (admin.adminEmail === loggedInUser.email) {
             user.admin = true;
         }
     })
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders?email='+loggedInUser.email)
+        fetch('http://localhost:5000/orders?email=' + loggedInUser.email)
             .then(res => res.json())
             .then(data => setList(data))
     }, [])
@@ -150,51 +150,62 @@ const BookingData = () => {
                 >
                     <Divider />
                     <List>
-                    <ListItem >
-                        <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/user"><ListItemText primary="Book" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/review"><ListItemText primary="Review" /></Link>
-                    </ListItem>
-                    {
-                        user.admin == true && 
+                        <ListItem >
+                            <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
+                        </ListItem>
+                        {
+                        user.admin == false &&
                         <div>
                             <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><ListItemText primary="Add Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
-                    </ListItem>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/user"><ListItemText primary="Book" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/review"><ListItemText primary="Review" /></Link>
+                            </ListItem>
                         </div>
                     }
-                </List>
+                        {
+                            user.admin == true &&
+                            <div>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <AddCircleIcon />
+                                    </ListItemIcon>
+                                    <Link to="/authority"><ListItemText primary="Add Service" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <EditIcon />
+                                    </ListItemIcon>
+                                    <Link to="/totalOrder"><ListItemText primary="Order List"></ListItemText></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <EditIcon />
+                                    </ListItemIcon>
+                                    <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
+                                </ListItem>
+                            </div>
+                        }
+                    </List>
                     <Divider />
                 </Drawer>
                 <main className={classes.content}>
@@ -213,6 +224,7 @@ const BookingData = () => {
                                                     <th scope="col">Service Name</th>
                                                     <th scope="col">Price</th>
                                                     <th scope="col">Payment ID</th>
+                                                    <th scope="col">Current Status</th>
                                                 </tr>
                                                 <img src="" alt="" />
 

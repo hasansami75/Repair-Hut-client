@@ -10,22 +10,7 @@
 }
 
 .services .card:hover{
-    background-image: linear-gradient(75deg, #19D3AE,#0fcfec);
+    background-image: linear-gradient(75deg,tomato , yellow);
     color: #fff !important;
     transition:  .1s  all ease-in-out !important;
 }
-/* .services .card:hover .card-body{
-    background-image: url(../../../Images/quote.png);
-    background-repeat: no-repeat;
-    background-position: right top;
-    background-size: 60%;
-} */
-/* .services .card:hover h6,
-.services .card:hover p
-{
-    color: #fff !important;
-
-}
-.services .card:hover img{
-    display: none;
-} */

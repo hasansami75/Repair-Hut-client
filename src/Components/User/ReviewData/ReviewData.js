@@ -16,6 +16,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../App';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -104,21 +105,22 @@ const ReviewData = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [imageURL, setImageURL] = useState(null);
 
-    const [isAdmin,setIsAdmin] = useState([]);
-    const [user , setUser] = useState({
-        admin : false,
+    const [isAdmin, setIsAdmin] = useState([]);
+    const [user, setUser] = useState({
+        admin: false,
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:5000/adminEmail')
-        .then(res => res.json())
-        .then(data => setIsAdmin(data))
-    },[])
-    
-    const adminMap = isAdmin.map(admin=>{
-        if(admin.adminEmail === loggedInUser.email){
+            .then(res => res.json())
+            .then(data => setIsAdmin(data))
+    }, [])
+
+    const adminMap = isAdmin.map(admin => {
+        if (admin.adminEmail === loggedInUser.email) {
             user.admin = true;
         }
     })
@@ -128,8 +130,9 @@ const ReviewData = () => {
         const reviewData = {
             name: data.userName,
             designation: data.designation,
-            description : data.description,
-            rating : data.rating
+            description: data.description,
+            rating: data.rating,
+            imageURL: imageURL
         };
         console.log(reviewData);
         const url = `http://localhost:5000/addReview`;
@@ -145,7 +148,23 @@ const ReviewData = () => {
                 if (data) {
                     alert("Thank you for your review");
                 }
-            })          
+            })
+    };
+
+    const handleImageUpload = event => {
+        console.log(event.target.files[0]);
+        const imageData = new FormData();
+        imageData.set('key', '8a27ca961afeedc0cada6fe756ac773f');
+        imageData.append('image', event.target.files[0]);
+
+        axios.post('https://api.imgbb.com/1/upload',
+            imageData)
+            .then(function (response) {
+                setImageURL(response.data.data.display_url);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     };
 
     return (
@@ -170,45 +189,56 @@ const ReviewData = () => {
                     <ListItem >
                         <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
                     </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/user"><ListItemText primary="Book" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/review"><ListItemText primary="Review" /></Link>
-                    </ListItem>
                     {
-                        user.admin == true && 
+                        user.admin == false &&
                         <div>
                             <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><ListItemText primary="Add Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
-                    </ListItem>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/user"><ListItemText primary="Book" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/review"><ListItemText primary="Review" /></Link>
+                            </ListItem>
+                        </div>
+                    }
+                    {
+                        user.admin == true &&
+                        <div>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/authority"><ListItemText primary="Add Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/totalOrder"><ListItemText primary="Order List"></ListItemText></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/makeAdmin"><ListItemText primary="Make Admin"></ListItemText></Link>
+                            </ListItem>
                         </div>
                     }
                 </List>
@@ -231,6 +261,9 @@ const ReviewData = () => {
                         <label class="form-label">Description</label>
                         <input class="form-control" {...register("description", { required: true })} placeholder="Description" name="description" />
                         <br />
+                        <label class="form-label">Upload Image</label>
+                        <input class="form-control" onChange={handleImageUpload} type="file" name="exampleRequired" />
+                        <br/>
                         <label class="form-label">Rate Us (Out of 5) </label>
                         <input class="form-control" {...register("rating", { required: true })} placeholder="Rate Us" name="rating" />
                         <br />

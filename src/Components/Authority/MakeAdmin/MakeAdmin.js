@@ -104,20 +104,20 @@ const MakeAdmin = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    const [isAdmin,setIsAdmin] = useState([]);
-    const [user , setUser] = useState({
-        admin : false,
+    const [isAdmin, setIsAdmin] = useState([]);
+    const [user, setUser] = useState({
+        admin: false,
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:5000/adminEmail')
-        .then(res => res.json())
-        .then(data => setIsAdmin(data))
-    },[])
-    
-    const adminMap = isAdmin.map(admin=>{
-        if(admin.adminEmail === loggedInUser.email){
+            .then(res => res.json())
+            .then(data => setIsAdmin(data))
+    }, [])
+
+    const adminMap = isAdmin.map(admin => {
+        if (admin.adminEmail === loggedInUser.email) {
             user.admin = true;
         }
     })
@@ -125,7 +125,7 @@ const MakeAdmin = () => {
     const onSubmit = data => {
         console.log(data)
         const adminEmails = {
-            adminEmail : data.adminEmail,
+            adminEmail: data.adminEmail,
         };
         const url = `http://localhost:5000/addAdminEmail`;
         fetch(url, {
@@ -161,51 +161,56 @@ const MakeAdmin = () => {
                     <ListItem >
                         <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
                     </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/user"><ListItemText primary="Book" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/review"><ListItemText primary="Review" /></Link>
-                    </ListItem>
                     {
-                        user.admin == true && 
+                        user.admin == false &&
                         <div>
                             <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><ListItemText primary="Add Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><Typography variant="h6">Edit Service</Typography></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
-                    </ListItem>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/user"><ListItemText primary="Book" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/review"><ListItemText primary="Review" /></Link>
+                            </ListItem>
+                        </div>
+                    }
+                    {
+                        user.admin == true &&
+                        <div>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/authority"><ListItemText primary="Add Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/totalOrder"><ListItemText primary="Order List"></ListItemText></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
+                            </ListItem>
                         </div>
                     }
                 </List>
@@ -219,10 +224,10 @@ const MakeAdmin = () => {
 
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {/* register your input into the hook by invoking the "register" function */}
-                        
+
                         <label class="form-label">Description</label>
-                        <input class="form-control" {...register("adminEmail", { required: true })} placeholder="Enter Email Address" name="adminEmail"/>
-                        <br/>
+                        <input class="form-control" {...register("adminEmail", { required: true })} placeholder="Enter Email Address" name="adminEmail" />
+                        <br />
                         {errors.exampleRequired && <span>This field is required</span>}
 
 

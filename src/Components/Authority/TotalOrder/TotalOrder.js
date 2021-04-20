@@ -15,6 +15,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../App';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 const drawerWidth = 240;
 
@@ -107,22 +108,47 @@ const TotalOrder = () => {
     console.log(list);
     console.log(loggedInUser);
 
-    const [isAdmin,setIsAdmin] = useState([]);
-    const [user , setUser] = useState({
-        admin : false,
+    const [isAdmin, setIsAdmin] = useState([]);
+    const [user, setUser] = useState({
+        admin: false,
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:5000/adminEmail')
-        .then(res => res.json())
-        .then(data => setIsAdmin(data))
-    },[])
-    
-    const adminMap = isAdmin.map(admin=>{
-        if(admin.adminEmail === loggedInUser.email){
+            .then(res => res.json())
+            .then(data => setIsAdmin(data))
+    }, [])
+
+    const adminMap = isAdmin.map(admin => {
+        if (admin.adminEmail === loggedInUser.email) {
             user.admin = true;
         }
     })
+
+    const [status, setStatus] = useState([]);
+
+    const updateData = (id) => {
+        const url = `http://localhost:5000/update/${id}`
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(status)
+        })
+            .then(res => {
+                if (res) {
+                    console.log(res)
+                    alert('Your status has been update successfully');
+                }
+            })
+    }
+
+    const updateStatus = (event) => {
+        const data = { ...status }
+        data[event.target.name] = event.target.value;
+        setStatus(data)
+    }
 
 
     useEffect(() => {
@@ -130,7 +156,6 @@ const TotalOrder = () => {
             .then(res => res.json())
             .then(data => setManageServices(data))
     }, [manageServices])
-    console.log(manageServices)
     return (
         <>
             <div className={classes.root}>
@@ -138,7 +163,7 @@ const TotalOrder = () => {
                 <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                     <Toolbar className={classes.toolbar}>
                         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                            Add Service
+                            Total Order
                </Typography>
                     </Toolbar>
                 </AppBar>
@@ -154,24 +179,29 @@ const TotalOrder = () => {
                         <ListItem >
                             <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
                         </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <DashboardIcon />
-                            </ListItemIcon>
-                            <Link to="/user"><ListItemText primary="Book" /></Link>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <AddCircleIcon />
-                            </ListItemIcon>
-                            <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <EditIcon />
-                            </ListItemIcon>
-                            <Link to="/review"><ListItemText primary="Review" /></Link>
-                        </ListItem>
+                        {
+                            user.admin == false &&
+                            <div>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <Link to="/user"><ListItemText primary="Book" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <AddCircleIcon />
+                                    </ListItemIcon>
+                                    <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <EditIcon />
+                                    </ListItemIcon>
+                                    <Link to="/review"><ListItemText primary="Review" /></Link>
+                                </ListItem>
+                            </div>
+                        }
                         {
                             user.admin == true &&
                             <div>
@@ -191,13 +221,13 @@ const TotalOrder = () => {
                                     <ListItemIcon>
                                         <EditIcon />
                                     </ListItemIcon>
-                                    <Link to="/authority"><Typography variant="h6">Edit Service</Typography></Link>
+                                    <Link to="/totalOrder"><ListItemText primary="Order List"></ListItemText></Link>
                                 </ListItem>
                                 <ListItem button>
                                     <ListItemIcon>
                                         <EditIcon />
                                     </ListItemIcon>
-                                    <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
+                                    <Link to="/makeAdmin"><ListItemText primary="Make Admin"></ListItemText></Link>
                                 </ListItem>
                             </div>
                         }
@@ -212,24 +242,34 @@ const TotalOrder = () => {
                                 <table class="table">
                                     <thead>
                                         <tr class="bg-info rounded">
-                                            <th scope="col">Service Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Payment ID</th>
+                                            <th scope="col"> Name</th>
+                                            <th scope="col">Email ID</th>
+                                            <th scope="col">Service</th>
+                                            <th scope="col">Pay With</th>
+                                            <th scope="col">Order Status</th>
                                         </tr>
                                     </thead>
-                                    <thead>
-                                        <tr class="bg-info rounded">
-                                            <tbody class="table-warning">
-                                                {manageServices.map(service => (<tr>
-                                                    <th scope="row">{service.name}</th>
-                                                    <td>{service.price}</td>
-                                                    {/* <td>{product.weight}</td> */}
-                                                    <td></td>
-                                                </tr>))}
-                                            </tbody>
-                                        </tr>
-                                    </thead>
-
+                                    <tbody class="table-warning">
+                                        {manageServices.map(service => (<tr>
+                                            <th scope="row">{service.userName}</th>
+                                            <td>{service.email}</td>
+                                            <td>{service.serviceName}</td>
+                                            <td>Card</td>
+                                            <td><h3>
+                                                <select
+                                                    value={service.status}
+                                                    onChange={updateStatus}
+                                                    className="form-control text center btn btn-warning"
+                                                    name="status"
+                                                >
+                                                    <option>Pending</option>
+                                                    <option>Shipped</option>
+                                                    <option>Done</option>
+                                                </select>
+                                            </h3>
+                                                <button className="btn btn-info" onClick={() => updateData(service._id)}>Update</button></td>
+                                        </tr>))}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

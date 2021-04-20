@@ -8,7 +8,9 @@ import './TopBanner.css'
 const TopBanner = () => {
     return (
         <>
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div className="row">
+                <div className="col-md-12">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -19,21 +21,21 @@ const TopBanner = () => {
                         <img src={tb1} class="d-block img-fluid w-100" alt="..." />
                         <div class="carousel-caption d-none d-md-block">
                             <h1>Bring your gadget <br/> back to life</h1>
-                            <p>Some representative placeholder content for the first slide.</p>
+                            <h4>Your favorite gadget broken? or not working!!! Come to us and bring your gadget back to your life.</h4>
                         </div>
                     </div>
                     <div class="carousel-item h-75">
                         <img src={tb2} class="d-block img-fluid w-100" alt="..." />
                         <div class="carousel-caption d-none d-md-block">
                             <h1>We fix your phone</h1>
-                            <p>Some representative placeholder content for the second slide.</p>
+                            <h4>We can fix all the problem of your phone. If you need to repair your phone asap. <br/> Don't hesitate, Come to US!!! </h4>
                         </div>
                     </div>
                     <div class="carousel-item h-75">
                         <img src={tb3} class="d-block img-fluid w-100" alt="..." />
                         <div class="carousel-caption d-none d-md-block">
                             <h1>We are open get <br/> quantity repairs</h1>
-                            <p>Some representative placeholder content for the third slide.</p>
+                            <h4>We are always open to serve you the best. We will repair all type of gadget related problem. <br/> So, Why are you Late???</h4>
                         </div>
                     </div>
                 </div>
@@ -45,6 +47,8 @@ const TopBanner = () => {
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+            </div>
+                </div>
             </div>
         </>
     );

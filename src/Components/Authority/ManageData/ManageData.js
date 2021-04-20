@@ -108,20 +108,20 @@ const ManageData = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    const [isAdmin,setIsAdmin] = useState([]);
-    const [user , setUser] = useState({
-        admin : false,
+    const [isAdmin, setIsAdmin] = useState([]);
+    const [user, setUser] = useState({
+        admin: false,
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:5000/adminEmail')
-        .then(res => res.json())
-        .then(data => setIsAdmin(data))
-    },[])
-    
-    const adminMap = isAdmin.map(admin=>{
-        if(admin.adminEmail === loggedInUser.email){
+            .then(res => res.json())
+            .then(data => setIsAdmin(data))
+    }, [])
+
+    const adminMap = isAdmin.map(admin => {
+        if (admin.adminEmail === loggedInUser.email) {
             user.admin = true;
         }
     })
@@ -158,53 +158,58 @@ const ManageData = () => {
                 <Divider />
                 <List>
                     <ListItem >
-                        <Link to="/home"><Typography variant="h4">Chander HUT</Typography></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/user"><ListItemText primary="Book" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/review"><ListItemText primary="Review" /></Link>
+                        <Link to="/home"><Typography variant="h4">Repair HUT</Typography></Link>
                     </ListItem>
                     {
-                        user.admin == true && 
+                        user.admin == false &&
                         <div>
                             <ListItem button>
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AddCircleIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><ListItemText primary="Add Service" /></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/authority"><Typography variant="h6">Edit Service</Typography></Link>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <EditIcon />
-                        </ListItemIcon>
-                        <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
-                    </ListItem>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/user"><ListItemText primary="Book" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/bookings"><ListItemText primary="Booking List" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/review"><ListItemText primary="Review" /></Link>
+                            </ListItem>
+                        </div>
+                    }
+                    {
+                        user.admin == true &&
+                        <div>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <DashboardIcon />
+                                </ListItemIcon>
+                                <Link to="/manage"><ListItemText primary="Manage Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <AddCircleIcon />
+                                </ListItemIcon>
+                                <Link to="/authority"><ListItemText primary="Add Service" /></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/totalOrder"><ListItemText primary="Order List"></ListItemText></Link>
+                            </ListItem>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EditIcon />
+                                </ListItemIcon>
+                                <Link to="/makeAdmin"><Typography variant="h6">Make Admin</Typography></Link>
+                            </ListItem>
                         </div>
                     }
                 </List>
@@ -226,12 +231,11 @@ const ManageData = () => {
 
                                 </thead>
                                 <tbody class="table-warning">
-                                {manageServices.map(service => (<tr>
-                                    <th scope="row">{service.name}</th>
-                                    <td>{service.price}</td>
-                                    {/* <td>{product.weight}</td> */}
-                                    <td><DeleteIcon style={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDeleteService(service._id)} /></td>
-                                </tr>))}
+                                    {manageServices.map(service => (<tr>
+                                        <th scope="row">{service.name}</th>
+                                        <td>{service.price}</td>
+                                        <td><DeleteIcon style={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDeleteService(service._id)} /></td>
+                                    </tr>))}
                                 </tbody>
 
                             </table>

@@ -14,7 +14,7 @@ const ReviewSection = () => {
         <>
             <div className="container">
                 <div className="row my-5">
-                    <h1 class="text-center">Customer Reviews</h1>
+                    <h1 class="text-center text-primary">Customer Reviews</h1>
                 </div>
                 <div className="row">
                     {

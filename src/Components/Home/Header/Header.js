@@ -1,14 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../App';
+import firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from '../../Login/firebase.config';
 
 const Header = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    var user = firebase.auth().currentUser;
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    const signOut = () => {
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+          }).catch((error) => {
+            // An error happened.
+          });
+    }
     
     return (
         <>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="#">Repair HUT</a>
+                    <Link to="/home" class="navbar-brand">Repair HUT</Link>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -23,11 +39,15 @@ const Header = () => {
                             <li class="nav-item">
                             <Link to="/user" class="nav-link active" aria-current="page">Dashboard</Link>
                             </li>
-                            
-                            <li class="nav-item">
-                                <Link to="/login"><button class="btn btn-outline-success" type="submit">Login</button></Link>
-                            </li>
                         </ul>
+                        <form class="d-flex">
+                            {
+                                user ? <span class="text-success mt-2 me-2" >{user.displayName}</span> : <Link to="/login"><button class="btn btn-outline-success" type="submit">Login</button></Link>
+                            }
+                            {
+                                user ? <Link to="/home"><button onClick={signOut} class="btn btn-outline-success" type="submit">Sign Out</button></Link> : <button style={{display:'none'}}></button>
+                            }
+                        </form>
                     </div>
                 </div>
             </nav>
